@@ -13,6 +13,7 @@ public class DragAll : MonoBehaviour
 	private Rigidbody2D dragBody = null;
 	private Vector3 offset;
 	[SerializeField] private LayerMask moveableLayers;
+	[SerializeField] private bool MoveRigidbody;
 	
 	void Update() {
 		if (Input.GetMouseButtonDown(0)) {
@@ -31,7 +32,7 @@ public class DragAll : MonoBehaviour
 		
 		if (dragging != null) {
 			var dragPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
-			if (dragBody != null) {
+			if (MoveRigidbody && dragBody != null) {
 				dragBody.MovePosition(dragPosition);
 			} else {
 				dragging.position = dragPosition;
