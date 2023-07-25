@@ -13,6 +13,11 @@ public class CannonLauncher : MonoBehaviour
     
     void Start()
     {
+        Launch();
+    }
+    
+    public void Launch()
+    {
         startX = transform.position.x;
         isLaunching = false;
         progress = 0.0f;
@@ -25,16 +30,10 @@ public class CannonLauncher : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         Debug.Log("Launching ...");
-        // Code to execute after the delay
         
-        DoLaunch();
-    }
-
-    void DoLaunch()
-    {
         isLaunching = true;
     }
-    
+
     void FixedUpdate() 
     {
         if (isLaunching)
