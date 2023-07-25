@@ -132,6 +132,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MoveEvery.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
       propertyPath: serpentinePropagationTime
       value: 0.25
       objectReference: {fileID: 0}
@@ -208,6 +216,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MoveEvery.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
       propertyPath: serpentinePropagationTime
       value: 0.25
@@ -286,6 +302,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxTorque
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MoveEvery.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
       propertyPath: serpentinePropagationTime
       value: 0.25
       objectReference: {fileID: 0}
@@ -362,6 +390,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxTorque
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MoveEvery.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
       propertyPath: serpentinePropagationTime
       value: 0.25
@@ -492,7 +532,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.869166
+  orthographic size: 11.011456
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -531,6 +571,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
+      propertyPath: MaxTorque
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 890976061591383793, guid: a7f66bb2ad970430b8d6628514d558b7, type: 3}
       propertyPath: serpentinePropagationTime
       value: 0.25

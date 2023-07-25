@@ -16,7 +16,7 @@ public class SnakeWiggle : MonoBehaviour
 	[SerializeField] private float MaxSpeed = 400;
     
 	[Header("The maximum force that can be applied to the Rigidbody2D at the joint to attain the target speed.")]
-	[SerializeField] private float MaxTorque = 500;
+	[SerializeField] private float MaxTorque = 5000;
 	
     private List<HingeJoint2D> segments = new List<HingeJoint2D>();
     private int currWiggleSegmentIndex = 0;
@@ -46,7 +46,7 @@ public class SnakeWiggle : MonoBehaviour
         segments.Add(tail);
         
         var curr = tail;
-        while (!(curr is null)) {
+        while (!(curr is null) && !(curr.connectedBody is null)) {
             HingeJoint2D sibling;
             var result = curr.connectedBody.gameObject.TryGetComponent<HingeJoint2D>(out sibling);
             if (result) {
