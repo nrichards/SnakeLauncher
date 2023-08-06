@@ -19,6 +19,8 @@ public class Health : MonoBehaviour
     
     void Start()
     {
+        var main = deathParticle.main;
+        main.stopAction = ParticleSystemStopAction.Callback;
     }
 
     void Update()
@@ -30,7 +32,6 @@ public class Health : MonoBehaviour
         {
             if (!Dying )
             {
-                Debug.Log($"Start Dying! {gameObject}");
                 Dying = true;
                 deathParticle.Play();
             }
@@ -58,7 +59,6 @@ public class Health : MonoBehaviour
     // Sent when an incoming collider makes contact with this object's collider (2D physics only).
     protected void OnCollisionEnter2D(Collision2D collisionInfo)
     {
-        //Debug.Log($"collisionInfo.gameObject");
         if (collisionInfo.gameObject.tag == EnemyTag) 
         {
             // TakeDamage
@@ -67,7 +67,7 @@ public class Health : MonoBehaviour
         
     }
     
-    public void OnParticleSystemStopped()
+    public void OnParticleSystemStoppedFromChild()
     {
         gameObject.SetActive(false);
         Destroy(gameObject, 0.1f);

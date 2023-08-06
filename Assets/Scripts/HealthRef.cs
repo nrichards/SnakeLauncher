@@ -10,4 +10,11 @@ public class HealthRef : MonoBehaviour
         
         health.OnCollisionEnter2DFromChild(collisionInfo, transform);
     }
+    
+    public void OnParticleSystemStopped()
+    {
+        var health = transform.parent.GetComponent<Health>();
+
+        health.OnParticleSystemStoppedFromChild();
+    }
 }

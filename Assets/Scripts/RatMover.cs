@@ -88,6 +88,9 @@ public class RatMover : MonoBehaviour
     
     void EnsureFacingDirection(GameObject go)
     {
+        // NOTE: DISABLED
+        //
+        
         var currentPosition = go.GetComponent<Rigidbody2D>().position;
         Vector2 currentDirection = (currentPosition-previousPosition).normalized;
         previousPosition = currentPosition;
