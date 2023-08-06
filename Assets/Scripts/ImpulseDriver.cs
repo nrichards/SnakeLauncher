@@ -19,6 +19,8 @@ public class ImpulseDriver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cloneable.SetActive(false);
+        
         InitProjectile();
         Launch();
     }

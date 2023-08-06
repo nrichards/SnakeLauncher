@@ -63,12 +63,15 @@ public class RatMover : MonoBehaviour
 
     
     [Header("Attach me to the parent of the rat objects\n\n")]
-    [SerializeField] public GameObject Tail; 
-    private HingeJoint2D hinge;
+    public GameObject Head; 
+    public GameObject Tail; 
+    public Vector2 WalkForce = new Vector2(50, 0);
     
+    private HingeJoint2D hinge;
     Vector2 previousPosition;
     bool xRightFacing = true;
-    
+    int settle = 0;
+    bool isGrounded = false;
     
     void Start()
     {
@@ -82,9 +85,10 @@ public class RatMover : MonoBehaviour
         EnsureRightSideUp(Tail);
         
         //EnsureFacingDirection(Tail);
+        
+        WalkToTheCorn(Head);
     }
     
-    int settle = 0;
     
     void EnsureFacingDirection(GameObject go)
     {
@@ -254,6 +258,26 @@ public class RatMover : MonoBehaviour
         if (Mathf.Abs(go.transform.eulerAngles.z) > 90f  && Mathf.Abs(go.transform.eulerAngles.z) < (360f-90f)) {
             go.GetComponent<Rigidbody2D>().AddTorque(flipStrength, ForceMode2D.Impulse);
         } 
+    }
+    
+    public void OnTouchGround(GameObject toucher, bool grounded)
+    {
+        isGrounded = grounded;
+    }
+    
+    void WalkToTheCorn(GameObject go)
+    {
+        // Tell if the Rat is touching the ground, or ANYTHING under foot
+        if (!isGrounded)
+        {
+            return;
+        }
+        
+        Debug.Log("Touching ground");
+        
+        // Then, ApplyForce to Rat
+        var rb = go.GetComponent<Rigidbody2D>();
+        rb.AddForce(WalkForce);
     }
     
 }
