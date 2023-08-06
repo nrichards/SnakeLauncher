@@ -25,6 +25,10 @@ public class ImpulseDriver : MonoBehaviour
     
     Rigidbody2D InitProjectile()
     {
+        //Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        //Vector3 worldCenter = Camera.main.ScreenToWorldPoint(screenCenter);
+        //var instance = Instantiate(Cloneable, worldCenter, Quaternion.identity);
+
         var instance = Instantiate(Cloneable);
         instance.SetActive(true);
         projectile = instance.GetComponentInChildren<Rigidbody2D>();
