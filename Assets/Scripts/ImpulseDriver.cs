@@ -7,11 +7,14 @@ using Game;
 
 public class ImpulseDriver : MonoBehaviour
 {
-    [SerializeField] public GameObject Cloneable;
-    [SerializeField] public Vector2 Force = new Vector2(30000, 10000);
-    [SerializeField] public float LoadDuration = 1.5f;
-    [SerializeField] public float LaunchDuration = 1.5f;
-    [SerializeField] public bool Autorepeat;
+    public GameObject Cloneable;
+    [Header("Set impulse angle and force. \nIf ForceAngle is set, angle is instead derived from that, \nand my magnitude is used for impulse.")]
+    public Vector2 Force = new Vector2(30000, 10000);
+    [Header("Optional: impulse angle derived from Transform.rotation.")]
+    public Transform ForceAngle;
+    public float LoadDuration = 1.5f;
+    public float LaunchDuration = 1.5f;
+    public bool Autorepeat;
     
     private bool isLaunching;
     private Rigidbody2D projectile;
@@ -32,6 +35,9 @@ public class ImpulseDriver : MonoBehaviour
         //var instance = Instantiate(Cloneable, worldCenter, Quaternion.identity);
 
         var instance = Instantiate(Cloneable);
+        instance.transform.position = Cloneable.transform.position;
+        instance.transform.rotation = Cloneable.transform.rotation;
+        
         instance.SetActive(true);
         projectile = instance.GetComponentInChildren<Rigidbody2D>();
         return projectile;
@@ -50,7 +56,16 @@ public class ImpulseDriver : MonoBehaviour
         {
             isLaunching = false;
             
-            projectile.AddForce(Force);
+            var forceVector = Force;
+
+            if (ForceAngle != null)
+            {
+                forceVector = CreateVector2FromAngleAndMagnitude(
+                    ForceAngle.rotation.eulerAngles.z, 
+                    Force.magnitude);
+            }
+            
+            projectile.AddForce(forceVector);
             
             if (Autorepeat)
             {
@@ -61,4 +76,11 @@ public class ImpulseDriver : MonoBehaviour
             }
         }
     }
+    
+    public static Vector2 CreateVector2FromAngleAndMagnitude(float angle, float magnitude)
+    {
+        float radians = angle * Mathf.Deg2Rad; // Convert angle to radians
+        return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * magnitude; // Create Vector2 and apply magnitude
+    }
+
 }

@@ -14,9 +14,9 @@ public class Health : MonoBehaviour
     public ParticleSystem deathParticle;
     public ParticleSystem damageParticle;
     
-    private Vector2 headPosition;
+    Vector2 headPosition;
     bool Dying = false;
-    private List<Collision2D> collisionInfos = new List<Collision2D>();
+    List<Collision2D> collisionInfos = new List<Collision2D>();
     
     void Start()
     {
@@ -79,7 +79,6 @@ public class Health : MonoBehaviour
         collisionInfos.Add(collisionInfo);
     }
     
-    // Sent when an incoming collider makes contact with this object's collider (2D physics only).
     protected void OnCollisionEnter2D(Collision2D collisionInfo)
     {
         if (collisionInfo.gameObject.tag == EnemyTag) 
@@ -88,13 +87,17 @@ public class Health : MonoBehaviour
             Value -= DamageOverTime;
             if (damageParticle)
             {
-                DoEmit(damageParticle);
+                DoBurst(damageParticle);
             }
         }
     }
     
     void DoEmit(ParticleSystem ps)
     {
+        // NOTE: Unused
+        //
+        
+        
         // Any parameters we assign in emitParams will override the current system's when we call Emit.
         // Here we will override the start color and size.
         var emitParams = new ParticleSystem.EmitParams();
@@ -103,8 +106,21 @@ public class Health : MonoBehaviour
         ps.Emit(emitParams, 10);
         ps.Play(); // Continue normal emissions
     }
-
     
+    void DoBurst(ParticleSystem ps)
+    {
+        var em = ps.emission;
+        em.enabled = true;
+        em.rateOverTime = 0;
+        em.SetBursts(
+            new ParticleSystem.Burst[]
+            {
+                new ParticleSystem.Burst(0.0f, 1),
+            });
+            
+        ps.Play();
+    }
+
     public void OnParticleSystemStoppedFromChild()
     {
         gameObject.SetActive(false);
