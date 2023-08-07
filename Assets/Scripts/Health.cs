@@ -7,33 +7,55 @@ using TMPro;
 public class Health : MonoBehaviour
 {
     public TextMeshPro HealthLabel;
-    private Vector2 headPosition;
     public float Value = 100f;
     public string Prefix = "h";
     public string EnemyTag = "Enemy";
     public float DamageOverTime = 0.01f;
-    public bool Dying = false;
-    
     public ParticleSystem deathParticle;
+    
+    private Vector2 headPosition;
+    bool Dying = false;
     private List<Collision2D> collisionInfos = new List<Collision2D>();
     
     void Start()
     {
-        var main = deathParticle.main;
-        main.stopAction = ParticleSystemStopAction.Callback;
+        if (deathParticle != null)
+        {
+            var main = deathParticle.main;
+            main.stopAction = ParticleSystemStopAction.Callback;
+        }
     }
 
     void Update()
     {
-        // Updates HealthLabel with current value
-        HealthLabel.text = $"{Prefix}: {Value}";
-
+        UpdateHealthLabel();
+        
         if (Value <= 0f)
         {
-            if (!Dying )
+            OnDie();
+        }
+    }
+    
+    void UpdateHealthLabel()
+    {
+        if (HealthLabel != null) 
+        {
+            HealthLabel.text = $"{Prefix}: {Value}";
+        }
+    }
+    
+    void OnDie()
+    {
+        if (!Dying )
+        {
+            Dying = true;
+            if (deathParticle != null)
             {
-                Dying = true;
                 deathParticle.Play();
+            }
+            else
+            {
+                OnParticleSystemStoppedFromChild();
             }
         }
     }

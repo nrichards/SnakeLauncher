@@ -273,7 +273,7 @@ public class RatMover : MonoBehaviour
             return;
         }
         
-        Debug.Log("Touching ground");
+        //Debug.Log($"Touching ground {go}");
         
         // Then, ApplyForce to Rat
         var rb = go.GetComponent<Rigidbody2D>();
