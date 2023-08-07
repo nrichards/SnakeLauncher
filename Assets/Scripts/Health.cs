@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     public string EnemyTag = "Enemy";
     public float DamageOverTime = 0.01f;
     public ParticleSystem deathParticle;
+    public ParticleSystem damageParticle;
     
     private Vector2 headPosition;
     bool Dying = false;
@@ -85,9 +86,24 @@ public class Health : MonoBehaviour
         {
             // TakeDamage
             Value -= DamageOverTime;
+            if (damageParticle)
+            {
+                DoEmit(damageParticle);
+            }
         }
-        
     }
+    
+    void DoEmit(ParticleSystem ps)
+    {
+        // Any parameters we assign in emitParams will override the current system's when we call Emit.
+        // Here we will override the start color and size.
+        var emitParams = new ParticleSystem.EmitParams();
+        emitParams.startColor = Color.red;
+        emitParams.startSize = 0.2f;
+        ps.Emit(emitParams, 10);
+        ps.Play(); // Continue normal emissions
+    }
+
     
     public void OnParticleSystemStoppedFromChild()
     {
