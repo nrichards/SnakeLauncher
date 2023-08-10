@@ -50,14 +50,20 @@ public class Health : MonoBehaviour
         if (!Dying )
         {
             Dying = true;
-            if (deathParticle != null)
-            {
-                deathParticle.Play();
-            }
-            else
-            {
-                OnParticleSystemStoppedFromChild();
-            }
+            
+            Death();
+        }
+    }
+    
+    void Death()
+    {
+        if (deathParticle != null)
+        {
+            deathParticle.Play();
+        }
+        else
+        {
+            OnParticleSystemStoppedFromChild();
         }
     }
     

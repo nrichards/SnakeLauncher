@@ -19,26 +19,37 @@ public class ImpulseDriver : MonoBehaviour
     private bool isLaunching;
     private Rigidbody2D projectile;
     
-    // Start is called before the first frame update
     void Start()
     {
         Cloneable.SetActive(false);
         
+        OneShot();
+    }
+    
+    public void OneShot(bool now = false)
+    {
         InitProjectile();
+        
+        var oldLaunchDuration = LaunchDuration;
+        if (now)
+        {
+            LaunchDuration = 0.0000001f;
+        }
+        
         Launch();
+        
+        LaunchDuration = oldLaunchDuration;
     }
     
     Rigidbody2D InitProjectile()
     {
-        //Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-        //Vector3 worldCenter = Camera.main.ScreenToWorldPoint(screenCenter);
-        //var instance = Instantiate(Cloneable, worldCenter, Quaternion.identity);
-
         var instance = Instantiate(Cloneable);
+        
         instance.transform.position = Cloneable.transform.position;
         instance.transform.rotation = Cloneable.transform.rotation;
         
         instance.SetActive(true);
+
         projectile = instance.GetComponentInChildren<Rigidbody2D>();
         return projectile;
     }
@@ -56,31 +67,44 @@ public class ImpulseDriver : MonoBehaviour
         {
             isLaunching = false;
             
-            var forceVector = Force;
+            AddForce();
+            
+            ContinueLaunching();
+        }
+    }
+    
+    void AddForce()
+    {
+        if (projectile == null) 
+        {
+            return;
+        }
+        
+        var forceVector = Force;
 
-            if (ForceAngle != null)
-            {
-                forceVector = CreateVector2FromAngleAndMagnitude(
-                    ForceAngle.rotation.eulerAngles.z, 
-                    Force.magnitude);
-            }
+        if (ForceAngle != null)
+        {
+            forceVector = CreateVector2FromAngleAndMagnitude(
+                ForceAngle.rotation.eulerAngles.z, 
+                Force.magnitude);
+        }
             
-            projectile.AddForce(forceVector);
-            
-            if (Autorepeat)
-            {
-                StartCoroutine(Execution.ExecuteAfterTime(LoadDuration, () => {
-                    InitProjectile();
-                    Launch();
-                } ));
-            }
+        projectile.AddForce(forceVector);
+    }
+    
+    void ContinueLaunching()
+    {
+        if (Autorepeat)
+        {
+            StartCoroutine(Execution.ExecuteAfterTime(LoadDuration, () => {
+                OneShot();
+            } ));
         }
     }
     
     public static Vector2 CreateVector2FromAngleAndMagnitude(float angle, float magnitude)
     {
-        float radians = angle * Mathf.Deg2Rad; // Convert angle to radians
-        return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * magnitude; // Create Vector2 and apply magnitude
+        float radians = angle * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * magnitude; 
     }
-
 }

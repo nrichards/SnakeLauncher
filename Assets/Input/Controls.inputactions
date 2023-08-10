@@ -1,0 +1,68 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Map",
+            "id": "895ae27b-57db-4fe5-b029-0e915e30521d",
+            "actions": [
+                {
+                    "name": "Do Action",
+                    "type": "Button",
+                    "id": "84b1b4f7-0c45-49ba-88f0-464788a1680f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2300fdbc-7d44-4f36-922f-6d6656d0bdaf",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Do Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b75fb73-dba6-4c76-8259-7061131b4d85",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Do Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1c98759a-468f-481b-85b9-c78f332d19a3",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Do Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "DualSense",
+            "bindingGroup": "DualSense",
+            "devices": [
+                {
+                    "devicePath": "<DualSenseGamepadHID>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
