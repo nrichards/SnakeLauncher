@@ -6,9 +6,27 @@
             "id": "895ae27b-57db-4fe5-b029-0e915e30521d",
             "actions": [
                 {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "2fbdbfef-9e84-4561-8820-4a944f3b246f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Do Action",
                     "type": "Button",
                     "id": "84b1b4f7-0c45-49ba-88f0-464788a1680f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tilt",
+                    "type": "Button",
+                    "id": "89046342-f852-4d60-90b9-39711d874e95",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -18,34 +36,56 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "2300fdbc-7d44-4f36-922f-6d6656d0bdaf",
-                    "path": "<Keyboard>/space",
+                    "id": "c04038c7-290e-4177-a68b-0183e81acdd6",
+                    "path": "<Gamepad>/rightTriggerButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "DualSense",
                     "action": "Do Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1b75fb73-dba6-4c76-8259-7061131b4d85",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Do Action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c98759a-468f-481b-85b9-c78f332d19a3",
+                    "id": "5fe24e7d-9017-4c07-81ef-0473a2e05893",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Do Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ace1c110-bc7b-46d3-9bf3-04749cb89989",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": "DualSense",
+                    "action": "Tilt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "7be77cb8-9cc7-4afd-a4e2-d5c127b7e5e4",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tilt",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a21f7bd-3022-4e27-be65-c102272bc080",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -59,6 +99,17 @@
             "devices": [
                 {
                     "devicePath": "<DualSenseGamepadHID>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Mouse",
+            "bindingGroup": "Mouse",
+            "devices": [
+                {
+                    "devicePath": "<VirtualMouse>",
                     "isOptional": true,
                     "isOR": false
                 }

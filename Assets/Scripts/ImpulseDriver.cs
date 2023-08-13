@@ -8,6 +8,7 @@ using Game;
 public class ImpulseDriver : MonoBehaviour
 {
     public GameObject Cloneable;
+    public InventoryItem CloneableItemType;
     [Header("Set impulse angle and force. \nIf ForceAngle is set, angle is instead derived from that, \nand my magnitude is used for impulse.")]
     public Vector2 Force = new Vector2(30000, 10000);
     [Header("Optional: impulse angle derived from Transform.rotation.")]

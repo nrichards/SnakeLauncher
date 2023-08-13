@@ -28,9 +28,27 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""895ae27b-57db-4fe5-b029-0e915e30521d"",
             ""actions"": [
                 {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""2fbdbfef-9e84-4561-8820-4a944f3b246f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Do Action"",
                     ""type"": ""Button"",
                     ""id"": ""84b1b4f7-0c45-49ba-88f0-464788a1680f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tilt"",
+                    ""type"": ""Button"",
+                    ""id"": ""89046342-f852-4d60-90b9-39711d874e95"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -40,34 +58,56 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""2300fdbc-7d44-4f36-922f-6d6656d0bdaf"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""c04038c7-290e-4177-a68b-0183e81acdd6"",
+                    ""path"": ""<Gamepad>/rightTriggerButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""DualSense"",
                     ""action"": ""Do Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1b75fb73-dba6-4c76-8259-7061131b4d85"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Do Action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1c98759a-468f-481b-85b9-c78f332d19a3"",
+                    ""id"": ""5fe24e7d-9017-4c07-81ef-0473a2e05893"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Do Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ace1c110-bc7b-46d3-9bf3-04749cb89989"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""Invert"",
+                    ""groups"": ""DualSense"",
+                    ""action"": ""Tilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7be77cb8-9cc7-4afd-a4e2-d5c127b7e5e4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tilt"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a21f7bd-3022-4e27-be65-c102272bc080"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -85,12 +125,25 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""bindingGroup"": ""Mouse"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<VirtualMouse>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
         // Map
         m_Map = asset.FindActionMap("Map", throwIfNotFound: true);
+        m_Map_Click = m_Map.FindAction("Click", throwIfNotFound: true);
         m_Map_DoAction = m_Map.FindAction("Do Action", throwIfNotFound: true);
+        m_Map_Tilt = m_Map.FindAction("Tilt", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -152,12 +205,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Map
     private readonly InputActionMap m_Map;
     private List<IMapActions> m_MapActionsCallbackInterfaces = new List<IMapActions>();
+    private readonly InputAction m_Map_Click;
     private readonly InputAction m_Map_DoAction;
+    private readonly InputAction m_Map_Tilt;
     public struct MapActions
     {
         private @Controls m_Wrapper;
         public MapActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_Map_Click;
         public InputAction @DoAction => m_Wrapper.m_Map_DoAction;
+        public InputAction @Tilt => m_Wrapper.m_Map_Tilt;
         public InputActionMap Get() { return m_Wrapper.m_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -167,16 +224,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MapActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MapActionsCallbackInterfaces.Add(instance);
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
             @DoAction.started += instance.OnDoAction;
             @DoAction.performed += instance.OnDoAction;
             @DoAction.canceled += instance.OnDoAction;
+            @Tilt.started += instance.OnTilt;
+            @Tilt.performed += instance.OnTilt;
+            @Tilt.canceled += instance.OnTilt;
         }
 
         private void UnregisterCallbacks(IMapActions instance)
         {
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
             @DoAction.started -= instance.OnDoAction;
             @DoAction.performed -= instance.OnDoAction;
             @DoAction.canceled -= instance.OnDoAction;
+            @Tilt.started -= instance.OnTilt;
+            @Tilt.performed -= instance.OnTilt;
+            @Tilt.canceled -= instance.OnTilt;
         }
 
         public void RemoveCallbacks(IMapActions instance)
@@ -203,8 +272,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_DualSenseSchemeIndex];
         }
     }
+    private int m_MouseSchemeIndex = -1;
+    public InputControlScheme MouseScheme
+    {
+        get
+        {
+            if (m_MouseSchemeIndex == -1) m_MouseSchemeIndex = asset.FindControlSchemeIndex("Mouse");
+            return asset.controlSchemes[m_MouseSchemeIndex];
+        }
+    }
     public interface IMapActions
     {
+        void OnClick(InputAction.CallbackContext context);
         void OnDoAction(InputAction.CallbackContext context);
+        void OnTilt(InputAction.CallbackContext context);
     }
 }
