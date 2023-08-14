@@ -7,7 +7,7 @@ public class CannonControl : MonoBehaviour
 {
     [Header("UI")]
     public Transform Cannon;
-    public GameObject snakeLauncherInput; // THis has been dragged onto me
+    public GameObject snakeLauncherInput; // This has been dragged onto me
     
     public float tiltSpeed = 1f;
     
@@ -90,24 +90,31 @@ public class CannonControl : MonoBehaviour
     
     void Trigger(InputAction.CallbackContext context)
     {
-        Debug.Log($"Trigger phase {context}");
-
         if (context.phase != InputActionPhase.Started)
         {
             return;
         }
         
-        Debug.Log("Is triggered");
-        
+        if (CanShoot())
+        {
+            impulseDriver.OneShot(true);
+            
+            ConsumeBullet();
+        }
+    }
+    
+    bool CanShoot()
+    {
+        return inventory.ItemCount(itemToLaunch) > 0;
+    }
+    
+    void ConsumeBullet()
+    {
         inventory.RemoveItem(itemToLaunch, 1);
-        
-        impulseDriver.OneShot(true);
     }
     
     void OnTilt(Vector2 amount)
     {
-        Debug.Log($"Is tilted {amount}");
-        
         Tilt(amount.x);
     }
     

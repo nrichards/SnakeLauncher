@@ -66,6 +66,8 @@ public class RatMover : MonoBehaviour
     public GameObject Head; 
     public GameObject Tail; 
     public Vector2 WalkForce = new Vector2(50, 0);
+    [Header("When the rat is upside down, amount of force used to flip it")]
+    public float FlipForce = 1.5f;
     
     private HingeJoint2D hinge;
     Vector2 previousPosition;
@@ -253,7 +255,7 @@ public class RatMover : MonoBehaviour
     
     void EnsureRightSideUp(GameObject go)
     {
-        float flipStrength = Mathf.Abs(GetInstanceID() % 100) > 50 ? 1.0f : -1.0f;
+        float flipStrength = Mathf.Abs(GetInstanceID() % 100) > 50 ? FlipForce : -FlipForce;
 
         if (Mathf.Abs(go.transform.eulerAngles.z) > 90f  && Mathf.Abs(go.transform.eulerAngles.z) < (360f-90f)) {
             go.GetComponent<Rigidbody2D>().AddTorque(flipStrength, ForceMode2D.Impulse);
