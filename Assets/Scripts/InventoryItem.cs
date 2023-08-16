@@ -7,7 +7,9 @@ public class InventoryItem
 
     public enum InventoryKind {
         None,
-        SnakeItem
+        SnakeItem,
+        RatItem,
+        CornItem
     }
     
     public InventoryKind inventoryKind; 

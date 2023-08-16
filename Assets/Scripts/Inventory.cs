@@ -5,9 +5,12 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public int SnakeCount;
+    public Dictionary<string, int> realInventory = new Dictionary<string, int>();
 
     void Start()
     {
+        realInventory.Add("snake", 0);
+        realInventory.Add("rat", 0);
     }
 
     void Update()

@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 
 public class Health : MonoBehaviour
 {
-    public TextMeshPro HealthLabel;
+    public EntityDebugLabel DebugLabel;
     public float Value = 100f;
     public string Prefix = "h";
     public string EnemyTag = "Enemy";
     public float DamageOverTime = 0.01f;
     public ParticleSystem deathParticle;
     public ParticleSystem damageParticle;
+    public UnityEvent OnDamage;
     
     Vector2 headPosition;
     bool Dying = false;
@@ -25,12 +27,12 @@ public class Health : MonoBehaviour
             var main = deathParticle.main;
             main.stopAction = ParticleSystemStopAction.Callback;
         }
+        
+        //OnDamage += new UnityEvent<UpdateHealthLabel>();
     }
 
     void Update()
     {
-        UpdateHealthLabel();
-        
         if (Value <= 0f)
         {
             OnDie();
@@ -39,10 +41,7 @@ public class Health : MonoBehaviour
     
     void UpdateHealthLabel()
     {
-        if (HealthLabel != null) 
-        {
-            HealthLabel.text = $"{Prefix}: {Value}";
-        }
+        DebugLabel?.AddDebugValue(Prefix, Value.ToString());
     }
     
     void OnDie()
@@ -89,13 +88,21 @@ public class Health : MonoBehaviour
     {
         if (collisionInfo.gameObject.tag == EnemyTag) 
         {
-            // TakeDamage
             Value -= DamageOverTime;
+            
             if (damageParticle)
             {
                 DoBurst(damageParticle);
             }
+            
+            OnDamage.Invoke();
         }
+    }
+    
+    public void OnDamageFromChild()
+    {
+        Debug.Log($"OnDamageFromChild listener count {OnDamage.GetPersistentEventCount()}");
+        OnDamage.Invoke();
     }
     
     void DoEmit(ParticleSystem ps)

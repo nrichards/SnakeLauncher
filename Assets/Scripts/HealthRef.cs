@@ -28,4 +28,14 @@ public class HealthRef : MonoBehaviour
 
         health.OnParticleSystemStoppedFromChild();
     }
+    
+    public void OnDamage()
+    {
+        health.OnDamageFromChild();
+    }
+
+
+    // Corn N Damage by Rat R
+    // Find R callback
+    // Call R_KeepAlive(N)
 }
