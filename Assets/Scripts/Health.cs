@@ -28,11 +28,16 @@ public class Health : MonoBehaviour
             main.stopAction = ParticleSystemStopAction.Callback;
         }
         
-        //OnDamage += new UnityEvent<UpdateHealthLabel>();
+
+        // NOTE: OnDamage does not seem to work
+        //
+        //
     }
 
     void Update()
     {
+        UpdateHealthLabel();
+        
         if (Value <= 0f)
         {
             OnDie();
