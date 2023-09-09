@@ -58,6 +58,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
+                    ""id"": ""b2eaf626-b7d9-40d2-97b8-962fec1f869f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Do Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c04038c7-290e-4177-a68b-0183e81acdd6"",
                     ""path"": ""<Gamepad>/rightTriggerButton"",
                     ""interactions"": """",
@@ -133,6 +144,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""devicePath"": ""<VirtualMouse>"",
                     ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
                     ""isOR"": false
                 }
             ]
@@ -279,6 +301,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (m_MouseSchemeIndex == -1) m_MouseSchemeIndex = asset.FindControlSchemeIndex("Mouse");
             return asset.controlSchemes[m_MouseSchemeIndex];
+        }
+    }
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
     public interface IMapActions

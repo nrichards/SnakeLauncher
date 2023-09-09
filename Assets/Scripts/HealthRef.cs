@@ -11,29 +11,29 @@ public class HealthRef : MonoBehaviour
     {
         if (health == null)
         {
-            health = transform.parent.GetComponent<Health>();
+            health = GetParentHealth();
         }
     }
     
     protected void OnCollisionEnter2D(Collision2D collisionInfo)
     {
-        var health = transform.parent.GetComponent<Health>();
-        
-        health.OnCollisionEnter2DFromChild(collisionInfo, transform);
+        health?.OnCollisionEnter2DFromChild(collisionInfo, transform);
     }
     
     public void OnParticleSystemStopped()
     {
-        var health = transform.parent.GetComponent<Health>();
-
-        health.OnParticleSystemStoppedFromChild();
+        health?.OnParticleSystemStoppedFromChild();
     }
     
     public void OnDamage()
     {
-        health.OnDamageFromChild();
+        health?.OnDamageFromChild();
     }
-
+    
+    public Health GetParentHealth()
+    {
+        return transform.parent.GetComponent<Health>();
+    }
 
     // Corn N Damage by Rat R
     // Find R callback

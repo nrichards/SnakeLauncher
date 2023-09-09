@@ -91,7 +91,7 @@ public class Health : MonoBehaviour
     
     protected void OnCollisionEnter2D(Collision2D collisionInfo)
     {
-        if (collisionInfo.gameObject.tag == EnemyTag) 
+        if (collisionInfo != null && collisionInfo.gameObject.tag == EnemyTag) 
         {
             Value -= DamageOverTime;
             
@@ -108,21 +108,6 @@ public class Health : MonoBehaviour
     {
         Debug.Log($"OnDamageFromChild listener count {OnDamage.GetPersistentEventCount()}");
         OnDamage.Invoke();
-    }
-    
-    void DoEmit(ParticleSystem ps)
-    {
-        // NOTE: Unused
-        //
-        
-        
-        // Any parameters we assign in emitParams will override the current system's when we call Emit.
-        // Here we will override the start color and size.
-        var emitParams = new ParticleSystem.EmitParams();
-        emitParams.startColor = Color.red;
-        emitParams.startSize = 0.2f;
-        ps.Emit(emitParams, 10);
-        ps.Play(); // Continue normal emissions
     }
     
     void DoBurst(ParticleSystem ps)
